@@ -1,8 +1,6 @@
 from pydantic import BaseModel
 from enum import Enum
 from typing import List, Optional
-from datetime import datetime
-import uuid
 
 class ThreatType(str, Enum):
     SAFE = "safe"
@@ -44,6 +42,9 @@ class ThreatLog(BaseModel):
     is_blocked: bool
     explanation: str
     latency_ms: float
+
+    def model_dump(self):
+        return self.dict()
 
 class AnalyzeResponse(BaseModel):
     id: str
