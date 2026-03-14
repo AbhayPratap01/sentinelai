@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const API = "http://localhost:8000";
-const WS = "ws://localhost:8000/ws";
+const API = process.env.REACT_APP_API_URL || "https://sentinelai-1-lae5.onrender.com";
+const WS = API.replace("https", "wss").replace("http", "ws") + "/ws";
 
 const RISK_COLORS = {
   safe: { bg: "#EAF3DE", text: "#27500A", border: "#639922" },
