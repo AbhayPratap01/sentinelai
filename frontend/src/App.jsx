@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 
-const API = process.env.REACT_APP_API_URL || "https://sentinelai-1-lae5.onrender.com";
+const API = "";
 const WS = API.replace("https", "wss").replace("http", "ws") + "/ws";
 
 const RISK_COLORS = {
