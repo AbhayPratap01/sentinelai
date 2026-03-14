@@ -50,27 +50,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    fetchData();
-    const ws = new WebSocket(WS);
-    wsRef.current = ws;
-    ws.onopen = () => setConnected(true);
-    ws.onclose = () => setConnected(false);
-    ws.onmessage = (e) => {
-      try {
-        const msg = JSON.parse(e.data);
-        if (msg.event === "new_threat") {
-          setThreats((prev) => [msg.data, ...prev].slice(0, 50));
-          setStats((prev) => {
-            if (!prev) return prev;
-            const total = prev.total + 1;
-            const blocked = prev.blocked + (msg.data.is_blocked ? 1 : 0);
-            return { ...prev, total, blocked, block_rate: Math.round((blocked / total) * 100 * 10) / 10 };
-          });
-        }
-      } catch {}
-    };
-    return () => ws.close();
-  }, [fetchData]);
+  fetchData();
+  setConnected(true);
+  const interval = setInterval(fetchData, 3000);
+  return () => clearInterval(interval);
+}, [fetchData]);
 
   const analyze = async (text) => {
     const p = text || prompt;
